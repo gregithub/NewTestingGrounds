@@ -15,8 +15,6 @@ class TESTINGGROUDS_API APatrollingGuard : public ATP_ThirdPersonCharacter
 	GENERATED_BODY()
 	
 public: //TODO remove or create Get
-	UPROPERTY(EditInstanceOnly, Category = "Patrol")
-		TArray<AActor*> PatrolPointsCPP;
 	
 	
 };
