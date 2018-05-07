@@ -10,7 +10,7 @@ EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent& Own
 {
 	//TODO protect agins no Patrol Route component
 
-	UE_LOG(LogTemp, Warning, TEXT("LOL"));
+	//UE_LOG(LogTemp, Warning, TEXT("check"));
 
 	//Get the patroled route. 
 	auto ControlledPawn = OwnerComp.GetAIOwner()->GetPawn();
