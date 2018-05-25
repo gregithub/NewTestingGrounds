@@ -48,7 +48,8 @@ public:
 		class UAnimInstance* AnimInstance;
 
 	/** Fires a projectile. */
-	void OnFire();
+	UFUNCTION(BlueprintCallable, Category ="Weapon")
+		void OnFire();
 
 protected:
 	// Called when the game starts or when spawned
