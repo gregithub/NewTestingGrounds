@@ -7,6 +7,7 @@
 #include "ActorPool.generated.h"
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TESTINGGROUDS_API UActorPool : public UActorComponent
 {
@@ -19,6 +20,7 @@ public:
 	AActor *Checkout();
 	void Return(AActor * ActorToReturn);
 	void Add(AActor* ActorToAdd);
-
+private:
+	TArray<AActor*> Pool;
 	
 };

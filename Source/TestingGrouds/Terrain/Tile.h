@@ -23,6 +23,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	
+	UPROPERTY(EditDefaultsOnly,Category = "Spawning")
+		FVector MinExtend;
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+		FVector MaxExtend;
+
 
 public:	
 	// Called every frame
