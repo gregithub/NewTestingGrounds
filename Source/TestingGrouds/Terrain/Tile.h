@@ -6,13 +6,27 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+USTRUCT()
+struct FSpawnPosition
+{
+	GENERATED_USTRUCT_BODY()
+
+		FVector Location;
+	float Rotation;
+	float Scale;
+
+
+};
+
+
 class UActorPool;
 
 UCLASS()
 class TESTINGGROUDS_API ATile : public AActor
 {
 	GENERATED_BODY()
-	
+
+
 public:	
 	// Sets default values for this actor's properties
 	ATile();
@@ -32,7 +46,6 @@ protected:
 		FVector NavigationBoundsOffset;
 		
 
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -44,11 +57,13 @@ public:
 private:
 	void PositionNavMeshBoundsVolume();
 
+	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float MinScale, float MaxScale, float Radius);
+
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	
 	bool FindEmptyLocation(FVector & OutLocation, float Radius);
 
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation,float Scale);
+	void PlaceActor(TSubclassOf<AActor> ToSpawn,const FSpawnPosition& SpawnPosition);
 
 	UActorPool* Pool;
 
