@@ -32,7 +32,10 @@ public:
 	ATile();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn=1, int MaxSpawn=1, float Radius=500, float MinScale = 1, float MaxScale =1);
+		void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn=1, int MaxSpawn=1, float MinScale = 1, float MaxScale =1, float Radius = 500);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -57,13 +60,15 @@ public:
 private:
 	void PositionNavMeshBoundsVolume();
 
-	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float MinScale, float MaxScale, float Radius);
+	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float MinScale, float MaxScale,float Radius );
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	
 	bool FindEmptyLocation(FVector & OutLocation, float Radius);
 
 	void PlaceActor(TSubclassOf<AActor> ToSpawn,const FSpawnPosition& SpawnPosition);
+
+	void PlaceAI(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition);
 
 	UActorPool* Pool;
 

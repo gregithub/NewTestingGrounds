@@ -36,18 +36,21 @@ void ATile::PositionNavMeshBoundsVolume()
 
 }
 
-void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn,int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale) {
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn,int MinSpawn, int MaxSpawn, float MinScale, float MaxScale, float Radius ) {
 	
 	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn, MinScale, MaxScale, Radius);
-	
-	RandomSpawnPositions(MinSpawn, MaxSpawn, MinScale, MaxScale, Radius);
-
 	for (FSpawnPosition SpawnPosition : SpawnPositions) {
 		PlaceActor(ToSpawn, SpawnPosition);
 	}
 }
+void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int MinSpawn, int MaxSpawn, float Radius) {
+	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn,1,1, Radius);//1 , 1 for MinScale and MaxScale
+	for (FSpawnPosition SpawnPosition : SpawnPositions) {
+		PlaceAI(ToSpawn, SpawnPosition);
+	}
+}
 
-TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float MinScale, float MaxScale, float Radius){
+TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float MinScale, float MaxScale, float Radius ){
 TArray<FSpawnPosition> SpawnPositions;
 	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 	for (size_t i = 0; i < NumberToSpawn; i++) {
@@ -82,6 +85,16 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn,const  FSpawnPosition& SpawnP
 	Spawned->AttachToActor(this,FAttachmentTransformRules(EAttachmentRule::KeepRelative,false));
 	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+}
+
+void ATile::PlaceAI(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition) {
+	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
+	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+	Spawned->SpawnDefaultController();
+	Spawned->Tags.Add(FName("Enemy"));
+
 }
 // Called when the game starts or when spawned
 void ATile::BeginPlay()
